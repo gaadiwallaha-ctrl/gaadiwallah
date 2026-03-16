@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaadi Wallah | Aditya Upadhyay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #0f172a; --accent: #2563eb; --success: #16a34a; --call: #ea580c; --danger: #c53030; }
+        * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { margin: 0; background: #f1f5f9; padding-bottom: 130px; }
+
+        /* SPLASH SCREEN */
+        #firstPage {
+            position: fixed; width: 100%; height: 100%; background: white;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 2000; text-align: center; padding: 20px; transition: 0.5s;
+        }
+        .logo-placeholder img { width: 140px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .brand-title { font-size: 32px; font-weight: 800; color: var(--primary); margin: 0; }
+        .business-info { margin-top: 15px; font-size: 14px; color: #444; line-height: 1.6; }
+        .gst-badge { display: inline-block; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 12px; border-radius: 6px; font-weight: 700; color: var(--accent); margin-top: 5px; }
+        .enter-btn { margin-top: 30px; padding: 15px 60px; background: var(--primary); color: white; border: none; border-radius: 30px; font-weight: 700; cursor: pointer; }
+
+        /* MAIN CONTENT */
+        .main-card { background: white; max-width: 500px; margin: 40px auto 20px; padding: 25px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .toggle-container { display: flex; background: #f1f5f9; padding: 5px; border-radius: 15px; margin-bottom: 20px; }
+        .toggle-btn { flex: 1; padding: 12px; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; background: transparent; transition: 0.3s; }
+        .toggle-btn.active { background: white; color: var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+        .terms-box { background: #fff5f5; border: 1px solid #feb2b2; border-radius: 12px; padding: 12px; margin-bottom: 15px; font-size: 11px; color: #742a2a; }
+        .section-title { font-size: 13px; font-weight: 700; color: var(--primary); margin: 20px 0 10px; border-bottom: 2px solid var(--accent); display: inline-block; }
+        
+        .form-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 5px; color: #64748b; text-transform: uppercase; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        
+        .btn-submit { width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; color: white; cursor: pointer; }
+        .btn-submit:disabled { background: #cbd5e1; cursor: not-allowed; }
+
+        .about-section { background: #f8fafc; border-radius: 15px; padding: 20px; margin-top: 20px; text-align: left; }
+        .about-text { font-size: 12px; color: #475569; line-height: 1.6; }
+        .contact-link { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+        .action-bar { position: fixed; bottom: 0; width: 100%; background: white; padding: 15px; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); z-index: 1000; }
+        .btn-call { display: block; background: var(--call); color: white; text-decoration: none; text-align: center; padding: 14px; border-radius: 12px; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+<div id="firstPage">
+    <img src="https://iili.io/ql8Rm2p.md.jpg" alt="Gaadi Wallah Logo">
+    <h1 class="brand-title">GAADI WALLAH</h1>
+    <div class="business-info">
+        <p><i>"BHAROSA RAKHIYE MATERIAL SAHI GAADI MEIN HAI"</i></p>
+        <p>Founder: <b>ADITYA KUMAR UPADHYAY</b></p>
+        <p>Contact: <b>7558700232</b></p>
+        <div class="gst-badge">GSTIN: 27AKGPU0098N1ZF</div>
+    </div>
+    <button class="enter-btn" onclick="welcome()">welcome</button>
+</div>
+
+<div class="main-card">
+    <div class="toggle-container">
+        <button id="sBtn" class="toggle-btn active" onclick="toggle('shipper')">Shipper</button>
+        <button id="tBtn" class="toggle-btn" onclick="toggle('truck')">Truck Owner</button>
+        <button id="aBtn" class="toggle-btn" onclick="toggle('about')">Contact & About</button>
+    </div>
+
+    <div id="shipperSection">
+        <div class="terms-box"><b>⚠️ Owner's Risk:</b> All goods booked at Shipper's risk. In case of any damage/Theft caused to consignment during transportation GAADI WALLAH is not responsible. Insurance is mandatory from consignor side.</div>
+        <form onsubmit="sendS(event)">
+            <div class="section-title">1. Company Info</div>
+            <div class="form-group"><label>Company Name</label><input type="text" id="s_comp" required></div>
+            <div class="form-group"><label>GST Number</label><input type="text" id="s_gst" required></div>
+            <div class="form-group"><label>Company Address</label><input type="text" id="s_addr" required></div>
+            <div class="form-group"><label>Contact Person Name</label><input type="text" id="s_pname" placeholder="Name of Manager/Owner" required></div>
+            <div class="form-group"><label>Direct Contact Number</label><input type="tel" id="s_pmob" placeholder="Mobile Number" required></div>
+            
+            <div class="section-title">2. Shipment Details</div>
+            <div class="form-group"><label>Loading Address</label><textarea id="s_addr" rows="2" required></textarea></div>
+            <div class="form-group"><label>Unloading Address</label><input type="text" id="s_comp" required></div>
+            <div class="form-group"><label>Route (From - To)</label><input type="text" id="s_route" placeholder="e.g. Mumbai to Delhi" required></div>
+            <div class="form-group"><label>Material & Weight</label><input type="text" id="s_load" required></div>
+            <div class="form-group">
+                <label>Vehicle Required</label>
+                <select id="s_vtype" required>
+                    <option value="">-- Select --</option>
+                    <option value="Pickup/Tempo">Pickup / Tempo</option>
+                    <option value="Open Body Truck">Open Body Truck</option>
+                    <option value="Container (20-32ft)">Container (20-32ft)</option>
+                    <option value="Trailer/Taurus">Trailer / Taurus</option>
+                </select>
+            </div>
+            <div style="font-size: 11px; color: var(--danger); font-weight: 700; margin-bottom: 15px;">
+                <input type="checkbox" id="sAgree" onclick="checkS()"> I accept Terms & Owner's Risk
+            </div>
+            <button type="submit" id="sSubmit" class="btn-submit" style="background: var(--accent);" disabled>Send Booking</button>
+        </form>
+    </div>
+
+    <div id="truckSection" style="display:none;">
+        <div class="terms-box"><b>⚠️ Carrier Liability:</b> Liability for cargo loss or damage rests solely with the Carrier/Driver. Compensation for such claims shall be enforceable against the assets and property of the Carrier to the maximum extent permitted by law.</div>
+        <form onsubmit="sendT(event)">
+            <div class="section-title">1. Owner Details</div>
+            <div class="form-group"><label>Truck Owner Name</label><input type="text" id="t_own" required></div>
+            <div class="form-group"><label>Contact Person Name</label><input type="text" id="t_pname" placeholder="Name of Driver/Manager" required></div>
+            <div class="form-group"><label>Contact Number</label><input type="tel" id="t_pmob" required></div>
+            <div class="form-group"><label>Aadhar / DL No.</label><input type="text" id="t_id" required></div>
+
+            <div class="section-title">2. Truck Info</div>
+            <div class="form-group"><label>Truck Number</label><input type="text" id="t_no" required></div>
+            <div class="form-group">
+                <label>Truck Type</label>
+                <select id="t_vtype" required>
+                    <option value="">-- Select --</option>
+                    <option value="Open Body">Open Body</option>
+                    <option value="Container">Container</option>
+                    <option value="Trailer">Trailer</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Preferred Routes</label><input type="text" id="t_routes" placeholder="e.g. Mumbai-Gujarat, Pune-Delhi" required></div>
+            
+            <div style="font-size: 11px; color: var(--danger); font-weight: 700; margin-bottom: 15px;">
+                <input type="checkbox" id="tAgree" onclick="checkT()"> I accept Full Asset Liability
+            </div>
+            <button type="submit" id="tSubmit" class="btn-submit" style="background: var(--success);" disabled>Register Truck</button>
+        </form>
+    </div>
+
+    <div id="aboutSection" style="display:none;" class="about-section">
+        <h3 style="margin:0 0 10px 0; color: var(--primary); font-size: 18px;">Gaadi Wallah Logistics</h3>
+        <p class="about-text">
+            <b>Founder:</b> Aditya Kumar Upadhyay<br>
+            <b>Contact:</b> 7558700232<br>
+            <b>GSTIN:</b> 27AKGPU0098N1ZF<br>
+            <b>Email:</b> <a href="mailto:gaadiwallaha@gmail.com" class="contact-link">gaadiwallaha@gmail.com</a>
+        </p>
+        <div class="section-title">Our Service</div>
+        <p class="about-text">
+            Specializing in Mumbai-based industrial logistics with Pan-India reach. We ensure verified vehicles and professional coordination for every shipment.
+        </p>
+    </div>
+</div>
+
+<div class="action-bar">
+    <a href="tel:+917558700232" class="btn-call">📞 Call Aditya Upadhyay</a>
+</div>
+
+<script>
+    const adminWA = "917558700232"
+
+    function welcome() { 
+        document.getElementById('firstPage').style.opacity = '0';
+        setTimeout(() => { document.getElementById('firstPage').style.display = 'none'; }, 500);
+    }
+
+    function toggle(mode) {
+        document.getElementById('shipperSection').style.display = mode === 'shipper' ? 'block' : 'none';
+        document.getElementById('truckSection').style.display = mode === 'truck' ? 'block' : 'none';
+        document.getElementById('aboutSection').style.display = mode === 'about' ? 'block' : 'none';
+        
+        document.getElementById('sBtn').className = 'toggle-btn ' + (mode === 'shipper' ? 'active' : '');
+        document.getElementById('tBtn').className = 'toggle-btn ' + (mode === 'truck' ? 'active' : '');
+        document.getElementById('aBtn').className = 'toggle-btn ' + (mode === 'about' ? 'active' : '');
+    }
+
+    function checkS() { document.getElementById('sSubmit').disabled = !document.getElementById('sAgree').checked; }
+    function checkT() { document.getElementById('tSubmit').disabled = !document.getElementById('tAgree').checked; }
+
+    function sendS(e) {
+        e.preventDefault();
+        const msg = [
+            `*GAADI WALLAH - SHIPPER BOOKING*`,
+            `🏢 *Company:* ${document.getElementById('s_comp').value}`,
+            `🧾 *GST:* ${document.getElementById('s_gst').value}`,
+            `👤 *Person:* ${document.getElementById('s_pname').value}`,
+            `📞 *Contact:* ${document.getElementById('s_pmob').value}`,
+            `📍 *Address:* ${document.getElementById('s_addr').value}`,
+            `🛣️ *Route:* ${document.getElementById('s_route').value}`,
+            `📦 *Load:* ${document.getElementById('s_load').value}`,
+            `🚚 *Vehicle:* ${document.getElementById('s_vtype').value}`
+        ].join('%0A');
+        window.open(`https://wa.me/${adminWA}?text=${msg}`, '_blank');
+    }
+
+    function sendT(e) {
+        e.preventDefault();
+        const msg = [
+            `*TRUCK OWNER REGISTRATION*`,
+            `👤 *Owner:* ${document.getElementById('t_own').value}`,
+            `👤 *Person:* ${document.getElementById('t_pname').value}`,
+            `📞 *Contact:* ${document.getElementById('t_pmob').value}`,
+            `🆔 *ID:* ${document.getElementById('t_id').value}`,
+            `🚛 *Truck No:* ${document.getElementById('t_no').value}`,
+            `🚚 *Type:* ${document.getElementById('t_vtype').value}`,
+            `🛣️ *Routes:* ${document.getElementById('t_routes').value}`,
+            `✅ *LIABILITY:* ACCEPTED`
+        ].join('%0A');
+        window.open(`https://wa.me/${adminWA}?text=${msg}`, '_blank');
+    }
+</script>
+
+</body>
+</html>
